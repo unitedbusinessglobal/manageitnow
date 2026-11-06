@@ -12,8 +12,9 @@ Spec: "ManageItNow — Product Spec" doc in claude.ai. Jira project key: MNGITNW
 - Multilingual from day one: all UI strings in `messages/<locale>.json`; English ships first, Hindi and Tamil next.
 
 ## Environments
-- Branches: `main` → DEV (`manageitnow-dev`), `qa` → QA (`manageitnow-qa`), `prod` → PROD (`manageitnow-prod`). Promote with `git push origin main:qa` and `git push origin qa:prod`.
-- Never push directly to `qa` or `prod` except to promote.
+- Branches: `main` → DEV (`manageitnow-dev`), `qa` → QA (`manageitnow-qa`), `uat` → UAT (`manageitnow-uat`), `prod` → PROD (`manageitnow-prod`). Promote with `git push origin main:qa`, `qa:uat`, `uat:prod`.
+- Never push directly to `qa`, `uat` or `prod` except to promote.
+- Neon: one branch per environment, all in ap-southeast-1. Vercel functions run in `sin1` (PROD in `bom1`). Use `/api/health` to check the database.
 
 ## Conventions
 - Plain JavaScript (JSX), Next.js App Router, server-only code in `lib/`.

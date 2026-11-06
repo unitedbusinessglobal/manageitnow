@@ -38,23 +38,31 @@ npm test
 
 ## Environments
 
-One Vercel project per environment, each deploying its own Git branch. UAT comes later.
+One Vercel project per environment, each deploying its own Git branch. Every environment has its own Neon branch in the Singapore region (`ap-southeast-1`).
 
 | Environment | Vercel project | Branch | Functions region | URL |
 | --- | --- | --- | --- | --- |
-| DEV | `manageitnow-dev` | `main` | `cle1` (next to the Neon DEV branch, us-east-2) | https://manageitnow-dev.vercel.app |
-| QA | `manageitnow-qa` | `qa` | `cle1` | https://manageitnow-qa.vercel.app |
+| DEV | `manageitnow-dev` | `main` | `sin1` | https://manageitnow-dev.vercel.app |
+| QA | `manageitnow-qa` | `qa` | `sin1` | https://manageitnow-qa.vercel.app |
+| UAT | `manageitnow-uat` | `uat` | `sin1` | https://manageitnow-uat.vercel.app |
 | PROD | `manageitnow-prod` | `prod` | `bom1` (Mumbai) | https://manageitnow-prod.vercel.app |
 
 **Releasing:** work lands on `main` and deploys to DEV automatically. Promote by fast-forwarding the next branch:
 
 ```bash
 git push origin main:qa      # DEV → QA
-git push origin qa:prod      # QA → PROD
+git push origin qa:uat       # QA → UAT (customer demos)
+git push origin uat:prod     # UAT → PROD
 ```
 
-QA and PROD skip every build that is not a production deployment of their own branch (Ignored Build Step).
-Each environment has its own `DATABASE_URL` (a separate Neon branch); apply `db/schema.sql` then `db/seed.sql` to a new database once.
+QA, UAT and PROD skip every build that is not a production deployment of their own branch (Ignored Build Step).
+For a push to deploy, each project's **Production Branch** must be set to its branch in Vercel
+(Project → Settings → Environments → Production → Branch Tracking).
+
+**Database:** the app uses `@neondatabase/serverless` (HTTP driver) via `lib/db.js`, reading `DATABASE_URL`.
+`GET /api/health` runs a live query and reports connection, latency and whether the schema is applied.
+Apply `db/schema.sql` then `db/seed.sql` once to each new database (Neon SQL Editor, or `npm run db:schema` with `DATABASE_URL` set).
+`neon.ts` holds the Neon project config for `neon deploy` / `neon env pull`.
 
 ## Status
 
