@@ -1,0 +1,31 @@
+{
+  "app": {
+    "name": "ManageItNow",
+    "tagline": "Run your projects, people and delivery in one place, in your language, priced in rupees."
+  },
+  "nav": {
+    "home": "Home",
+    "projects": "Projects",
+    "commandCenter": "Command center",
+    "chat": "Chat",
+    "admin": "Admin"
+  },
+  "health": {
+    "on_track": "On track",
+    "at_risk": "At risk",
+    "off_track": "Off track"
+  },
+  "admin": {
+    "pricingTitle": "Plan pricing",
+    "pricingLead": "Edit plan rates and set customer-specific prices. Every change is logged.",
+    "customerRates": "Customer-specific rates",
+    "save": "Save"
+  },
+  "landing": {
+    "cta": "Open the app",
+    "featureBoards": "Boards, tables, calendars and timelines",
+    "featureCommand": "Live delivery command center: tests, deploys, pipeline",
+    "featureAi": "AI stand-ups, weekly reports and risk flags",
+    "featureIndia": "INR pricing, GST invoices and WhatsApp alerts"
+  }
+}
