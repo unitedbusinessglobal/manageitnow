@@ -11,6 +11,10 @@ Spec: "ManageItNow — Product Spec" doc in claude.ai. Jira project key: MNGITNW
 - A plan rate change applies to new subscriptions and renewals, not mid-cycle. A customer rate stays until an admin changes it or `valid_until` passes.
 - Multilingual from day one: all UI strings in `messages/<locale>.json`; English ships first, Hindi and Tamil next.
 
+## Environments
+- Branches: `main` → DEV (`manageitnow-dev`), `qa` → QA (`manageitnow-qa`), `prod` → PROD (`manageitnow-prod`). Promote with `git push origin main:qa` and `git push origin qa:prod`.
+- Never push directly to `qa` or `prod` except to promote.
+
 ## Conventions
 - Plain JavaScript (JSX), Next.js App Router, server-only code in `lib/`.
 - Money in integer paise. Every tenant query filters by `org_id`.

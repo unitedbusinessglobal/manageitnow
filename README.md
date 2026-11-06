@@ -38,7 +38,23 @@ npm test
 
 ## Environments
 
-DEV → QA → UAT → PROD, one Vercel project per environment, matching the pipeline used across our products.
+One Vercel project per environment, each deploying its own Git branch. UAT comes later.
+
+| Environment | Vercel project | Branch | Functions region | URL |
+| --- | --- | --- | --- | --- |
+| DEV | `manageitnow-dev` | `main` | `cle1` (next to the Neon DEV branch, us-east-2) | https://manageitnow-dev.vercel.app |
+| QA | `manageitnow-qa` | `qa` | `cle1` | https://manageitnow-qa.vercel.app |
+| PROD | `manageitnow-prod` | `prod` | `bom1` (Mumbai) | https://manageitnow-prod.vercel.app |
+
+**Releasing:** work lands on `main` and deploys to DEV automatically. Promote by fast-forwarding the next branch:
+
+```bash
+git push origin main:qa      # DEV → QA
+git push origin qa:prod      # QA → PROD
+```
+
+QA and PROD skip every build that is not a production deployment of their own branch (Ignored Build Step).
+Each environment has its own `DATABASE_URL` (a separate Neon branch); apply `db/schema.sql` then `db/seed.sql` to a new database once.
 
 ## Status
 
